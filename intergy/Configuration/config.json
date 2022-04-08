@@ -1,0 +1,124 @@
+{
+    "FileFormats": {
+        "cs": ".cs",
+        "json": ".json"
+    },
+    "version": "01",
+    "EhrSystem": "Intergy",
+    "SchemaVersion": "12_40_00_10",
+    "BaseLocation": "../../CodeBase/udm-transformer/UDMTransformer/",
+    "FileLocation": {
+        "Model": "BusinessLogic/Intergy/Models/",
+        "Serialization": "BusinessLogic/Intergy/Serializations/",
+        "Deserialization": "BusinessLogic/Intergy/DeserializerFactories/",
+        "TableRelations": "BusinessLogic/Intergy/TablesRelations/",
+        "TableRelationsTest": "BusinessLogicTests/IntergyTests/TableRelations/",
+        "Transformers": "BusinessLogic/Intergy/Transformers/"
+    },
+    "NameSpace": {
+        "Deserializer": "BusinessLogic.Intergy.DeserializerFactories",
+        "Models": "BusinessLogic.Intergy.Models",
+        "FrameworkBaseClasses": "Framework.BaseClasses",
+        "FrameworkInterfaces": "Framework.Interfaces",
+        "FrameworkLogic": "Framework.Logic",
+        "FrameworkModels": "Framework.Models",
+        "FrameworkHelpers": "Framework.Helpers",
+        "Serializations": "BusinessLogic.Intergy.Serializations",
+        "TableRelations": "BusinessLogic.Intergy.TablesRelations",
+        "Transformers": "BusinessLogic.Intergy.Transformers",
+        "TableRelationsTest": "BusinessLogicTests.IntergyTests.TableRelations",
+        "Logger": "TransformerCore.Logger.ILogger",
+        "TestLogger": "TransformerCore.Logger",
+        "TestHelper": "BusinessLogicTests.IntergyTests.Helpers"
+    },
+    "library": {
+        "NewtonsoftJson": "Newtonsoft.Json",
+        "Xunit": "Xunit",
+        "Moq": "Moq",
+        "CodeAnalysis": "System.Diagnostics.CodeAnalysis",
+        "FhirModels": " Hl7.Fhir.Model",
+        "Generic": "System.Collections.Generic",
+        "Linq": "System.Linq"
+    },
+    "Concept": {
+        "ConceptName": "ServiceRequest",
+        "TableRelations": [
+            "PatientOrderSet",
+            "PatientOMOrderLineItem",
+            "EncounterFinding",
+            "PatientOrderSetActivity",
+            "PatientOMOrderSet",
+            "LabOrder",
+            "CardioOrder",
+            "Procedure"
+        ],
+        "TableFields": {
+            "PatientOrderSet": [
+                "PatientOrderSet",
+                "PatientOrderSetSID",
+                "EncounterSID",
+                "PatientOrderSetStatus",
+                "SignStamp",
+                "PatientOrderCloseReason"
+            ],
+            "PatientOMOrderLineItem": [
+                "PatientOrderSetSID",
+                "ProcedureCode",
+                "SnomedCode"
+            ],
+            "EncounterFinding": [
+                "EncounterSID"
+            ],
+            "PatientOrderSetActivity": [
+                "PatientOrderSetSID"
+            ],
+            "PatientOMOrderSet": [
+                "PatientOrderSetSID"
+            ],
+            "LabOrder": [
+                "PatientOrderSetSID"
+            ],
+            "CardioOrder": [
+                "PatientOrderSetSID"
+            ],
+            "MandatoryFields": [
+                "TimeStamp",
+                "LastUser",
+                "CreateStamp",
+                "CreateUser"
+            ]
+        },
+        "TableRelationDetails": [
+            { "From": "PatientOMOrderLineItem", "To": "PatientOrderSet", "FromField": "PatientOrderSetSID", "ToField": "PatientOrderSetSID" },
+            { "From": "PatientOrderSetActivity", "To": "PatientOrderSet", "FromField": "PatientOrderSetSID", "ToField": "PatientOrderSetSID" },
+            { "From": "PatientOMOrderSet", "To": "PatientOrderSet", "FromField": "PatientOrderSetSID", "ToField": "PatientOrderSetSID" },
+            { "From": "LabOrder", "To": "PatientOrderSet", "FromField": "PatientOrderSetSID", "ToField": "PatientOrderSetSID" },
+            { "From": "CardioOrder", "To": "PatientOrderSet", "FromField": "PatientOrderSetSID", "ToField": "PatientOrderSetSID" },
+            { "From": "PatientOrderSet", "To": "EncounterFinding", "FromField": "EncounterSID", "ToField": "EncounterSID" }
+        ],
+        "MandatoryTableRecords": [
+            "PatientOrderSet",
+            "PatientOMOrderLineItem",
+            "EncounterFinding",
+            "PatientOrderSetActivity",
+            "PatientOMOrderSet",
+            "LabOrder",
+            "CardioOrder",
+            "Procedure"
+        ],
+        "Tests": {
+            "TableRelationsTests": {
+                "CorrectData": {
+                    "PatientOrderSet": "1abed78b-ac9e-4a02-a84e-29fe4eceb538",
+                    "PatientOMOrderLineItem": "fd80c04e-3453-4fcd-ad61-a19b914e3073",
+                    "EncounterFinding": "1cc72a41-4c6c-4a69-af1d-1b290b3c6839",
+                    "PatientOrderSetActivity": "ca3c22f7-4013-4bb9-a2d9-6d388ab680eb",
+                    "PatientOMOrderSet": "1ed0fa80-7853-4302-a7bf-c07e5ef29375",
+                    "LabOrder": "d9bd15d3-b9fa-4c2d-9794-033710e8317b",
+                    "CardioOrder": "ca3c22f7-4013-4bb9-a2d9-6d388ab680eb",
+                    "Procedure": "abe2bae7-02e6-441c-9bb0-c0b7bf38bd17"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "_id": "ca3c22f7-4013-4bb9-a2d9-6d388ab680ec",
+    "record": {
+        "activityclass": "activityclass",
+        "activitycount": "12",
+        "comments": "comments",
+        "createstamp": "2022-03-07T12:36:51.850Z",
+        "createuser": "createuser",
+        "lastuser": "lastuser",
+        "patientordersetsid": "39",
+        "timestamp": "2022-03-07T12:36:51.850Z"
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.40.00_10",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:36:51.850Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20211203-00001",
+        "tablename": "patientordersetactivity",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:36:51.850Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

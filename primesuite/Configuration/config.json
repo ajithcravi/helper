@@ -1,0 +1,95 @@
+{
+    "FileFormats": {
+        "cs": ".cs",
+        "json": ".json"
+    },
+    "version": "01",
+    "EhrSystem": "PrimeSuite",
+    "EhrSystemCamelCase": "primeSuite",
+    "SchemaVersion": "18_30_00",
+    "BaseLocation": "../../../CodeBase/udm-transformer/UDMTransformer/",
+    "FileLocation": {
+        "Model": "BusinessLogic/PrimeSuite/Models/",
+        "Serialization": "BusinessLogic/PrimeSuite/Serializations/",
+        "Deserialization": "BusinessLogic/PrimeSuite/DeserializerFactories/",
+        "TableRelations": "BusinessLogic/PrimeSuite/TableRelations/",
+        "TableRelationsTest": "BusinessLogicTests/PrimeSuiteTests/TableRelations/",
+        "Transformers": "BusinessLogic/PrimeSuite/Transformers/",
+        "UnitTestMockData": "BusinessLogicTests/PrimeSuiteTests/MockData"
+    },
+    "NameSpace": {
+        "Deserializer": "BusinessLogic.PrimeSuite.DeserializerFactories",
+        "Models": "BusinessLogic.PrimeSuite.Models",
+        "FrameworkBaseClasses": "Framework.BaseClasses",
+        "FrameworkInterfaces": "Framework.Interfaces",
+        "FrameworkLogic": "Framework.Logic",
+        "FrameworkModels": "Framework.Models",
+        "FrameworkHelpers": "Framework.Helpers",
+        "Serializations": "BusinessLogic.PrimeSuite.Serializations",
+        "TableRelations": "BusinessLogic.PrimeSuite.TablesRelations",
+        "Transformers": "BusinessLogic.PrimeSuite.Transformers",
+        "TableRelationsTest": "BusinessLogicTests.PrimeSuiteTests.TableRelations",
+        "Logger": "TransformerCore.Logger.ILogger",
+        "TestLogger": "TransformerCore.Logger",
+        "TransformerCoreInterfaces": "TransformerCore.Interfaces",
+        "TestHelper": "BusinessLogicTests.PrimeSuiteTests.Helpers"
+    },
+    "library": {
+        "NewtonsoftJson": "Newtonsoft.Json",
+        "Xunit": "Xunit",
+        "Moq": "Moq",
+        "CodeAnalysis": "System.Diagnostics.CodeAnalysis",
+        "FhirModels": " Hl7.Fhir.Model",
+        "Generic": "System.Collections.Generic",
+        "Linq": "System.Linq"
+    },
+    "Concept": {
+        "ConceptName": "ServiceRequest",
+        "ConceptId": "us-core-servicerequest",
+        "ConceptURL": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest",
+        "SubjectReferenceType": "patient",
+        "SubjectReferenceURL": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+        "TableDetails": {
+            "Tables": [{
+                    "TableName": "OrdersTracking",
+                    "Fields": [
+                        "OrderID",
+                        "StatusID",
+                        "PatientID",
+                        "CreateDate"
+                    ]
+                },
+                {
+                    "TableName": "OrdersTrackingProcedure",
+                    "Fields": [
+                        "OrderID",
+                        "ProcedureCode"
+                    ]
+                }
+            ],
+            "CommonFields": []
+        },
+        "TableRelationDetails": [{
+                "TableName": "OrdersTracking",
+                "Relations": [
+                    { "From": "OrdersTracking", "FromField": "OrderID", "To": "OrdersTrackingProcedure", "ToField": "OrderID" }
+                ]
+            },
+            {
+                "TableName": "OrdersTrackingProcedure",
+                "Relations": [
+                    { "From": "OrdersTrackingProcedure", "FromField": "OrderID", "To": "OrdersTracking", "ToField": "OrderID" }
+                ]
+            }
+        ],
+        "MandatoryTableRecords": [
+            "OrdersTracking"
+        ],
+        "Transformation": {
+            "LibraryModelName": "ServiceRequest",
+            "SubjectReferenceDetails": [
+                { "TableName": "OrdersTracking", "Field": "PatientID" }
+            ]
+        }
+    }
+}

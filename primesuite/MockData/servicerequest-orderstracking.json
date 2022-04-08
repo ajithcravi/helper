@@ -1,0 +1,46 @@
+{
+    "_id": "d670c33a-ed7c-4c1d-925b-fa4e5c501165",
+    "record": {
+        "orderid": "91",
+        "patientid": "10006",
+        "issuingdocumentid": "1415",
+        "unit": "1",
+        "description": "Urinalysis - Manual w/ Dipstick",
+        "disabled": "0",
+        "dateordered": "2004-06-14 00:00:00.000",
+        "statusid": "1006",
+        "fustatusid": null,
+        "funotes": null,
+        "resultgeneralfindingid": null,
+        "reviewedby": null,
+        "enteredby": "1005",
+        "resultnotes": null,
+        "resultsreceived": "0",
+        "collectedbycareproviderid": null,
+        "reasonforcancelid": null,
+        "cancelnotes": null,
+        "createdate": "2003-12-17 14:15:25.543",
+        "ordconceptid": "121358",
+        "statflag": "False",
+        "ordercodetypeid": null,
+        "collecteddatetime": null,
+        "procedurecodedisplay": "81002",
+        "guid": null
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.441.350011",
+        "schemaversion": "18.30.00",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:44:13.470Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.441.350011-20211203-00001",
+        "tablename": "orderstracking",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:44:13.470Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "_id": "fd80c04e-3453-4fcd-ad61-a19b914e3074",
+    "record": {
+        "patientomorderlineitemsid": "40",
+        "patientordersetsid": "39",
+        "omorderdefsid": "27",
+        "description": "PRENATAL",
+        "procedurecode": "32821",
+        "comments": null,
+        "timestamp": "20080108-44829",
+        "lastuser": "5",
+        "createstamp": "20080108-44829",
+        "createuser": "5",
+        "patientordersetresultsid": null,
+        "macrocode": null,
+        "aucstatus": null,
+        "snomedcode": null
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.40.00_10",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:36:35.870Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20211203-00001",
+        "tablename": "patientomorderlineitem",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:36:35.870Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

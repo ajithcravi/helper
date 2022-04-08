@@ -1,0 +1,26 @@
+{
+    "_id": "a7e33fa2-38a0-4b0d-826a-8c91894058e7",
+    "record": {
+        "id": "9",
+        "orderid": "91",
+        "proceduremasterid": null,
+        "procedurecode": "80048",
+        "immunizationflag": "False"
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.441.350011",
+        "schemaversion": "18.30.00",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:43:32.855Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.441.350011-20211203-00001",
+        "tablename": "orderstrackingprocedure",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:43:32.855Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}
