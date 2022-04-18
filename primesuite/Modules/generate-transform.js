@@ -97,11 +97,11 @@ let generateTranformPart = () => {
                 Profile = new string[] { "${config.Concept.ConceptURL}" },
                 Source = ${config.EhrSystemCamelCase + config.Concept.MandatoryTableRecords[0]}Record.Metadata.TenantId
             };
-            
-            
+
+
             //Code goes here
-            
-            
+
+
             return ${variableName};
             `
 

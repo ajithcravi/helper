@@ -44,47 +44,51 @@
         "Linq": "System.Linq"
     },
     "Concept": {
-        "ConceptName": "RespiratoryRate",
-        "ConceptId": "us-core-respiratory-rate",
-        "ConceptURL": "http://hl7.org/fhir/StructureDefinition/resprate",
+        "ConceptName": "ServiceRequest",
+        "ConceptId": "us-core-servicerequest",
+        "ConceptURL": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest",
         "SubjectReferenceType": "patient",
         "SubjectReferenceURL": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
         "TableDetails": {
             "Tables": [{
-                    "TableName": "OBXManual",
+                    "TableName": "OrdersTracking",
                     "Fields": [
-                        "ResultStatus",
+                        "OrderID",
+                        "StatusID",
                         "PatientID",
-                        "CollectionDate",
-                        "ResultValue",
-                        "ResultUnits",
-                        "ConceptID",
-                        "LastChangedBy"
+                        "CreateDate"
                     ]
                 },
                 {
-                    "TableName": "CareProvider",
+                    "TableName": "OrdersTrackingProcedure",
                     "Fields": [
-                        "UserID",
-                        "CareProviderID"
+                        "OrderID",
+                        "ProcedureCode"
                     ]
                 }
             ],
             "CommonFields": []
         },
         "TableRelationDetails": [{
-            "TableName": "OBXManual",
-            "Relations": [
-                { "From": "OBXManual", "FromField": "LastChangedBy", "To": "CareProvider", "ToField": "UserID" }
-            ]
-        }],
+                "TableName": "OrdersTracking",
+                "Relations": [
+                    { "From": "OrdersTracking", "FromField": "OrderID", "To": "OrdersTrackingProcedure", "ToField": "OrderID" }
+                ]
+            },
+            {
+                "TableName": "OrdersTrackingProcedure",
+                "Relations": [
+                    { "From": "OrdersTrackingProcedure", "FromField": "OrderID", "To": "OrdersTracking", "ToField": "OrderID" }
+                ]
+            }
+        ],
         "MandatoryTableRecords": [
-            "OBXManual"
+            "OrdersTracking"
         ],
         "Transformation": {
-            "LibraryModelName": "Observation",
+            "LibraryModelName": "ServiceRequest",
             "SubjectReferenceDetails": [
-                { "TableName": "OBXManual", "Field": "PatientID" }
+                { "TableName": "OrdersTracking", "Field": "PatientID" }
             ]
         }
     }

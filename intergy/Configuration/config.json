@@ -12,7 +12,7 @@
         "Serialization": "BusinessLogic/Intergy/Serializations/",
         "Deserialization": "BusinessLogic/Intergy/DeserializerFactories/",
         "TableRelations": "BusinessLogic/Intergy/TablesRelations/",
-        "TableRelationsTest": "BusinessLogicTests/IntergyTests/TableRelations/",
+        "TableRelationsTest": "BusinessLogicTests/IntergyTests/TablesRelations/",
         "Transformers": "BusinessLogic/Intergy/Transformers/"
     },
     "NameSpace": {
@@ -26,7 +26,7 @@
         "Serializations": "BusinessLogic.Intergy.Serializations",
         "TableRelations": "BusinessLogic.Intergy.TablesRelations",
         "Transformers": "BusinessLogic.Intergy.Transformers",
-        "TableRelationsTest": "BusinessLogicTests.IntergyTests.TableRelations",
+        "TableRelationsTest": "BusinessLogicTests.IntergyTests.TablesRelations",
         "Logger": "TransformerCore.Logger.ILogger",
         "TestLogger": "TransformerCore.Logger",
         "TestHelper": "BusinessLogicTests.IntergyTests.Helpers"
