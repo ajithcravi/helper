@@ -1,0 +1,46 @@
+{
+    "_id": "20241f0d-2a8f-4d8c-8209-c56ebc597c77",
+    "record": {
+        "obxmanualid": "1003",
+        "obxmanualguid": "B2718682-E882-40E3-89A1-0A37EFEB2113",
+        "obxconceptid": "1005",
+        "concepthistoryid": null,
+        "patientid": "18200",
+        "testdescription": "Heart Rate",
+        "resultvaluetype": "0",
+        "resultunits": "{beats}/min",
+        "resultvalue": "999.0",
+        "localresultunits": "{beats}/min",
+        "localresultvalue": "999.0",
+        "localresultflag": null,
+        "localresultuomconceptid": "389145",
+        "referencerange": null,
+        "resultflag": null,
+        "resultstatus": "Final",
+        "collectiondate": "2005-08-26 08:46:45.000",
+        "resultdate": "2005-08-26 08:46:45.000",
+        "createuser": "1039",
+        "createdate": "2010-10-21 06:06:17.873",
+        "lastchangedby": "1039",
+        "lastchangeddate": "2010-10-21 06:06:17.873",
+        "resultdocumentid": null,
+        "documentid": null,
+        "enabled": "1"
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.441.86420",
+        "schemaversion": "18.30.00",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:44:11.339Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.441.86420-20211203-00001",
+        "tablename": "obxmanual",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:44:11.339Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

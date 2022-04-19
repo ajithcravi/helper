@@ -51,8 +51,8 @@ let generateMandatoryRecordsNullCheck = () => {
     config.Concept.MandatoryTableRecords.forEach(tableName => checks.push(`${config.EhrSystemCamelCase + tableName}Record == null`))
 
     let mandatoryRecordsCheck = `
-            if(${checks.join(" || ")})
-                throw new ArgumentNullException(nameof(inputData), $"Records not available for generating SmokingStatus resource");`
+            if (${checks.join(" || ")})
+                throw new ArgumentNullException(nameof(inputData), $"Records not available for generating ${config.Concept.ConceptName} resource");`
 
     return mandatoryRecordsCheck;
 
@@ -103,7 +103,7 @@ let generateTranformPart = () => {
 
 
             return ${variableName};
-            `
+`
 
     return content;
 }
@@ -161,4 +161,5 @@ let generateTransform = () => {
 
 }
 
-module.exports = generateTransform;
+// module.exports = generateTransform;
+generateTransform()

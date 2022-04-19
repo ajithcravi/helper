@@ -19,10 +19,10 @@ using ILogger = ${config.NameSpace.Logger};
 }
 
 let generateResourceTableClassGenericDefinitions = () => {
-    let genericDefinitions = `private Dictionary <string, List <RelationshipDescriptionBase>> _tableToRelationship = new();
+    let genericDefinitions = `private Dictionary<string, List<RelationshipDescriptionBase>> _tableToRelationship = new();
         private readonly VersionedDeserializerFactory _versionedDeserializerFactory;
         private readonly IStorageAccess _storageAccess;
-        private readonly List <string> _mandatoryTableRecords;
+        private readonly List<string> _mandatoryTableRecords;
         private readonly ILogger _logger;
 
         private void AddRelationship(string name, List<RelationshipDescriptionBase> relationships)
@@ -33,32 +33,54 @@ let generateResourceTableClassGenericDefinitions = () => {
 
 }
 
+let generateKeyPairs = (table) => {
+    let content = ``;
+    let keys = [];
+
+    table.Relations.forEach((detail, index) => {
+        let key = "";
+        let value = `${table.FromTable.toLowerCase()}.Record.${detail.FromField}`;;
+
+        if(detail.Value) {
+            key = `record.${detail.Field.toLowerCase()}`;
+            value = `"${detail.Value}"`;
+        }else {
+            key = `record.${detail.ToField.toLowerCase()}`;
+        }
+        
+        content += `KeyPair key${index} = new("${key}", ${value});\n`;
+        if(index < table.Relations.length-1) content+= '            '
+        keys.push(`key${index}`);
+    })
+
+    content += `\n            return new List<KeyPair> { ${keys.join(", ")} };`;
+
+    return content;
+}
+
 let generateRelationships = () => {
 
     let relationships = ``;
 
     config.Concept.TableRelationDetails.forEach(table => {
-        table.Relations.forEach(detail => {
 
             let relation = `
-    public class ${detail.From}To${detail.To}Relationship : RelationshipDescription<${detail.From + config.version}, ${detail.To + config.version}>
+    public class ${config.Concept.ConceptName}${table.FromTable}To${table.ToTable}Relationship : RelationshipDescription<${table.FromTable + config.version}, ${table.ToTable + config.version}>
     {
-        public ${detail.From}To${detail.To}Relationship() : base("${detail.From.toLowerCase()}", "${detail.To.toLowerCase()}")
+        public ${config.Concept.ConceptName}${table.FromTable}To${table.ToTable}Relationship() : base("${table.FromTable.toLowerCase()}", "${table.ToTable.toLowerCase()}")
         {
         }
 
         protected override IEnumerable<KeyPair> GetKeysOverride(DBRecordBase record)
         {
-            var ${detail.From.toLowerCase()} = (${detail.From + config.version})record;
-            KeyPair key = new("record.${detail.ToField.toLowerCase()}", ${detail.From.toLowerCase()}.Record.${detail.FromField});
+            var ${table.FromTable.toLowerCase()} = (${table.FromTable + config.version})record;
 
-            return new List<KeyPair> { key };
+            ${generateKeyPairs(table)}
+
         }
     }`;
 
             relationships += `${relation}`;
-
-        })
     })
 
     return relationships;
@@ -72,9 +94,10 @@ let generateRelationshipCalls = () => {
     let relation = {};
     config.Concept.TableRelationDetails.forEach(table => {
 
-        if (!relation[table.TableName]) relation[table.TableName] = [];
-        table.Relations.forEach(detail => relation[detail.From].push(`new ${detail.From}To${detail.To}Relationship()`))
-
+        if (!relation[table.FromTable]) relation[table.FromTable] = [];
+        table.Relations.forEach(detail => {
+            if(!detail.Value) relation[table.FromTable].push(`new ${config.Concept.ConceptName}${table.FromTable}To${table.ToTable}Relationship()`)
+        })
     })
 
     Object.keys(relation).forEach(key => {
@@ -211,4 +234,5 @@ let generateTableRelation = () => {
 
 }
 
-module.exports = generateTableRelation;
+// module.exports = generateTableRelation;
+generateTableRelation()

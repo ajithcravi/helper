@@ -1,7 +1,7 @@
 let fs = require('fs');
 let config = require('../Configuration/config.json');
 
-let sourceDirectory = './MockData'
+let sourceDirectory = `./MockData/${config.Concept.ConceptName}`
 let targetDirectory = config.BaseLocation + config.FileLocation.UnitTestMockData
 
 let fileNames = fs.readdirSync(sourceDirectory);
@@ -25,4 +25,5 @@ let copyMockData = () => {
     }
 }
 
-module.exports = copyMockData;
+// module.exports = copyMockData;
+copyMockData()

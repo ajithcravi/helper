@@ -7,7 +7,7 @@
     "EhrSystem": "PrimeSuite",
     "EhrSystemCamelCase": "primeSuite",
     "SchemaVersion": "18_30_00",
-    "BaseLocation": "../../../CodeBase/udm-transformer/UDMTransformer/",
+    "BaseLocation": "../../../../Projects/GWH/udm-transformer/UDMTransformer/",
     "FileLocation": {
         "Model": "BusinessLogic/PrimeSuite/Models/",
         "Serialization": "BusinessLogic/PrimeSuite/Serializations/",
@@ -39,7 +39,7 @@
         "Xunit": "Xunit",
         "Moq": "Moq",
         "CodeAnalysis": "System.Diagnostics.CodeAnalysis",
-        "FhirModels": " Hl7.Fhir.Model",
+        "FhirModels": "Hl7.Fhir.Model",
         "Generic": "System.Collections.Generic",
         "Linq": "System.Linq"
     },
@@ -58,7 +58,7 @@
                         "CollectionDate",
                         "ResultValue",
                         "ResultUnits",
-                        "ConceptID",
+                        "OBXConceptID",
                         "LastChangedBy"
                     ]
                 },
@@ -72,12 +72,23 @@
             ],
             "CommonFields": []
         },
-        "TableRelationDetails": [{
-            "TableName": "OBXManual",
-            "Relations": [
-                { "From": "OBXManual", "FromField": "LastChangedBy", "To": "CareProvider", "ToField": "UserID" }
-            ]
-        }],
+        "TableRelationDetails": [
+            {
+                "FromTable": "OBXManual",
+                "ToTable": "CareProvider",
+                "Relations": [
+                    { "FromField": "LastChangedBy", "ToField": "UserID" },
+                    { "Field": "OBXConceptID", "Value": "1008"}
+                ]
+            },
+            {
+                "FromTable": "CareProvider",
+                "ToTable": "OBXManual",
+                "Relations": [
+                    { "FromField": "UserID", "ToField": "LastChangedBy" }
+                ]
+            }
+        ],
         "MandatoryTableRecords": [
             "OBXManual"
         ],
