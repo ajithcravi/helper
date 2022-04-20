@@ -57,5 +57,5 @@ let generateSerialization = () => {
 
 }
 
-// module.exports = generateSerialization;
+module.exports = generateSerialization;
 generateSerialization()

@@ -1,6 +1,6 @@
 let config = require('../Configuration/config.json')
 
-let mockDataBaseLocation = `../MockData/${config.Concept.ConceptName}`
+let mockDataBaseLocation = `../MockData/${config.EhrSystem}/${config.Concept.ConceptName}`
 
 let mockDataErrors = {}
 
@@ -34,7 +34,11 @@ config.Concept.TableRelationDetails.forEach(relationDetails => {
             toData = require(`${mockDataBaseLocation}/${toFile}`)['record'][relation.ToField.toLocaleLowerCase()]
         }
 
-        if(!fromData || !toData || fromData !== toData) mockDataErrors['RelationErrors'].push(relation)
+        if(!fromData || !toData || fromData !== toData) {
+            relation["FromTable"] = relationDetails["FromTable"]
+            if(!relation.Value && !relation.Field) relation["ToTable"] = relationDetails["ToTable"]
+            mockDataErrors['RelationErrors'].push(relation)
+        }
 
     })
 })

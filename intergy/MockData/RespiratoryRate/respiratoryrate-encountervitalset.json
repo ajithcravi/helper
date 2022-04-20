@@ -1,0 +1,35 @@
+{
+    "_id": "fdb01982-0cc8-44e3-abd6-eded1325a987",
+    "record": {
+        "encountervitalsetsid": "30",
+        "encountersid": "442",
+        "recordstatus": "A",
+        "vitaldate": "2007-11-08",
+        "vitaltime": "32580",
+        "note": null,
+        "timestamp": "20090820-54595",
+        "lastuser": null,
+        "createstamp": "20090820-54595",
+        "createuser": "9",
+        "notestamp": null,
+        "vitaldatetimeutc": null,
+        "ispatientpregnant": null,
+        "vitalpregnantedd": null
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.50.00_12",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:36:33.571Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20211203-00001",
+        "tablename": "encountervitalset",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:36:33.571Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

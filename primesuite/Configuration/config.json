@@ -6,7 +6,7 @@
     "version": "01",
     "EhrSystem": "PrimeSuite",
     "EhrSystemCamelCase": "primeSuite",
-    "SchemaVersion": "18_30_00",
+    "SchemaVersion": "18_31_00",
     "BaseLocation": "../../../../Projects/GWH/udm-transformer/UDMTransformer/",
     "FileLocation": {
         "Model": "BusinessLogic/PrimeSuite/Models/",

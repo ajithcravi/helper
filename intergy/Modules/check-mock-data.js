@@ -34,7 +34,11 @@ config.Concept.TableRelationDetails.forEach(relationDetails => {
             toData = require(`${mockDataBaseLocation}/${toFile}`)['record'][relation.ToField.toLocaleLowerCase()]
         }
 
-        if(!fromData || !toData || fromData !== toData) mockDataErrors['RelationErrors'].push(relation)
+        if(!fromData || !toData || fromData !== toData) {
+            relation["FromTable"] = relationDetails["FromTable"]
+            if(!relation.Value && !relation.Field) relation["ToTable"] = relationDetails["ToTable"]
+            mockDataErrors['RelationErrors'].push(relation)
+        }
 
     })
 })

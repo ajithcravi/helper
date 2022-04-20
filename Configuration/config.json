@@ -8,7 +8,7 @@
     "EhrSystemCamelCase": "intergy",
     "SchemaVersion": "12.50.00_12",
     "SchemaVersionUnderscored": "12_50_00_12",
-    "BaseLocation": "../../../../Projects/GWH/udm-transformer/UDMTransformer/",
+    "BaseLocation": "../../../Projects/GWH/udm-transformer/UDMTransformer/",
     "FileLocation": {
         "Model": "BusinessLogic/Intergy/Models/",
         "Serialization": "BusinessLogic/Intergy/Serializations/",

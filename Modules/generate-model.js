@@ -98,5 +98,5 @@ let generateModel = () => {
 
 }
 
-// module.exports = generateModel;
+module.exports = generateModel;
 generateModel();

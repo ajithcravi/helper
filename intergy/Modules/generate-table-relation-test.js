@@ -2,6 +2,11 @@ let fs = require('fs');
 
 let config = require('../Configuration/config.json');
 
+let serializationFactory = config.EhrSystem === 'Intergy' ? `V${config.SchemaVersion}SerializationFactory()` : `V${config.SchemaVersion + config.EhrSystem}SerializationFactory()`;
+
+let fromTableBuffer = "";
+let toTableBuffer = "";
+
 let generateImports = () => {
 
     let importStatements = `using ${config.NameSpace.Deserializer};
@@ -28,14 +33,14 @@ let generateResourceTableTestClassGenericDefinitions = () => {
     let genericDefinitions = `private readonly Mock<VersionedDeserializerFactory> _mockVersionSerializationFactory;
         private readonly Mock<IStorageAccess> _storageAccess;
         private readonly Mock<ILogger> _logger;
-        public ${config.Concept.ConceptName}ResourceTableTests()
+        public ${config.EhrSystem === 'Intergy' ? "" : config.EhrSystem}${config.Concept.ConceptName}ResourceTableTests()
         {
             var mockVersionSerialization =
                 new Mock<Dictionary<EHRType, Dictionary<string, SerializationFactoryBase>>>();
             mockVersionSerialization.Object.Add(EHRType.${config.EhrSystem}, new Dictionary<string, SerializationFactoryBase>()
             {
                 {
-                     "12.40.00_10", new V12_40_00_10SerializationFactory()
+                     "${config.SchemaVersion.split("_").join(".")}", new ${serializationFactory}
                 }
             });
             _mockVersionSerializationFactory = new Mock<VersionedDeserializerFactory>(mockVersionSerialization.Object);
@@ -49,10 +54,10 @@ let generateResourceTableTestClassGenericDefinitions = () => {
 let generateMockTables = () => {
     let mockTablesStatement = ``;
 
-    config.Concept.MandatoryTableRecords.forEach(tableName => {
-        let mock = `\n            string serialized${tableName} = FileHelper.ReadMockJsonFile("${config.Concept.ConceptName.toLowerCase()}-${tableName.toLowerCase()}.json");
-            _storageAccess.Setup(x => x.GetRecords < DBRecordBase > (It.IsAny < EHRType > (), "${tableName.toLowerCase()}",
-            It.IsAny < IEnumerable < KeyPair >> ()).Result).Returns(new List < string > () { serialized${tableName} });
+    config.Concept.TableDetails.Tables.forEach(table => {
+        let mock = `\n            string serialized${table.TableName} = FileHelper.ReadMockJsonFile("${config.Concept.ConceptName.toLowerCase()}-${table.TableName.toLowerCase()}.json");
+            _storageAccess.Setup(x => x.GetRecords < DBRecordBase > (It.IsAny < EHRType > (), "${table.TableName.toLowerCase()}",
+            It.IsAny < IEnumerable < KeyPair >> ()).Result).Returns(new List < string > () { serialized${table.TableName} });
 `
         mockTablesStatement += mock;
 
@@ -61,20 +66,42 @@ let generateMockTables = () => {
     return mockTablesStatement;
 }
 
+let generateChangedValuesDefinitions = (relations) => {
+    let definitions = ``;
+    relations.forEach(relation => {
+        if(relation.ToField) {
+            let value = require(`../MockData/${config.Concept.ConceptName}/${config.Concept.ConceptName.toLowerCase()}-${toTableBuffer.toLowerCase()}`).record[relation.ToField.toLowerCase()]
+            if (!value) throw Error(`Change record value cannot be null/undefined. Please check table: ${toTableBuffer.toLowerCase()} field: ${relation.ToField}`)
+            let definition = `mockChanged${config.Concept.ConceptName}Record.Object.Record.${relation.FromField} = "${value}";`
+    
+            definitions += `\n            ${definition}`
+        }
+    })
+
+    return definitions;
+}
+
 let generateTestStatements = () => {
     let testStatements = ``;
 
-    config.Concept.MandatoryTableRecords.forEach(tableName => {
+    config.Concept.TableRelationDetails.forEach(table => {
+        fromTableBuffer = table.FromTable;
+        toTableBuffer = table.ToTable;
+
         sucessStatement = `\n        [Fact]
-        public async void ${config.Concept.ConceptName.toLowerCase()}ResourceTables_CallsGetAllRecordsNeededForResource_ShouldReturnComplete_With${tableName}Change()
+        public async void ${config.Concept.ConceptName.toLowerCase()}ResourceTables_CallsGetAllRecordsNeededForResource_ShouldReturnComplete_With${table.FromTable}Change()
         {
             var ${config.Concept.ConceptName.toLowerCase()}ResourceTables =
                 new ${config.Concept.ConceptName}ResourceTables(_mockVersionSerializationFactory.Object, _storageAccess.Object, _logger.Object);
 ${generateMockTables()}
+            var mockChanged${config.Concept.ConceptName}Record = new Mock<${table.FromTable}01>().SetupAllProperties();
+            mockChanged${config.Concept.ConceptName}Record.Object.Id = "12345";
+            mockChanged${config.Concept.ConceptName}Record.Object.Metadata.Tablename = "${table.FromTable.toLowerCase()}";
+${generateChangedValuesDefinitions(table.Relations)}
 
-            var mockChanged${config.Concept.ConceptName}Record = new Mock<${tableName}01>().SetupAllProperties();
             var resultForChanged${config.Concept.ConceptName}Record =
                 await ${config.Concept.ConceptName.toLowerCase()}ResourceTables.GetAllRecordsNeededForResource(mockChanged${config.Concept.ConceptName}Record.Object);
+            Assert.Equal(GetAllRecordsStatus.RecordSetComplete, resultForChanged${config.Concept.ConceptName}Record.Status);
         }
 `
 
@@ -87,11 +114,12 @@ ${generateMockTables()}
             var ${config.Concept.ConceptName.toLowerCase()}ResourceTables =
                 new ${config.Concept.ConceptName}ResourceTables(_mockVersionSerializationFactory.Object, _storageAccess.Object, _logger.Object);
 ${generateMockTables()}
-
             var mockChanged${config.Concept.ConceptName}Record = new Mock<${config.Concept.MandatoryTableRecords[0]}01>().SetupAllProperties();
-            mockChanged${config.Concept.ConceptName}Record.Object.Id = "wrongId";
+            mockChanged${config.Concept.ConceptName}Record.Object.Id = "12345";
+            mockChanged${config.Concept.ConceptName}Record.Object.Metadata.Tablename = "wrongtable";
             var resultForChanged${config.Concept.ConceptName}Record =
                 await ${config.Concept.ConceptName.toLowerCase()}ResourceTables.GetAllRecordsNeededForResource(mockChanged${config.Concept.ConceptName}Record.Object);
+            Assert.Equal(GetAllRecordsStatus.RecordSetIncomplete, resultForChanged${config.Concept.ConceptName}Record.Status);
         }
 `
     testStatements += failureStatement
@@ -103,7 +131,7 @@ let generateResourceTableTestClass = () => {
     let resourceTableTestClass = `namespace ${config.NameSpace.TableRelationsTest}
 {
     [ExcludeFromCodeCoverage]
-    public class ${config.Concept.ConceptName}ResourceTableTests
+    public class ${config.EhrSystem === 'Intergy' ? "" : config.EhrSystem}${config.Concept.ConceptName}ResourceTableTests
     {
         ${generateResourceTableTestClassGenericDefinitions()}
 ${generateTestStatements()}
@@ -116,7 +144,11 @@ ${generateTestStatements()}
 
 let generateTableRelationTest = () => {
     try {
-        let filePath = config.BaseLocation + config.FileLocation.TableRelationsTest + config.Concept.ConceptName + "ResourceTablesTests" + config.FileFormats.cs;
+
+        let filePath = config.BaseLocation + config.FileLocation.TableRelationsTest + config.EhrSystem + config.Concept.ConceptName + "ResourceTablesTests" + config.FileFormats.cs;
+
+        if (config.EhrSystem === 'Intergy')
+            filePath = config.BaseLocation + config.FileLocation.TableRelationsTest + config.Concept.ConceptName + "ResourceTablesTests" + config.FileFormats.cs;
 
         if (fs.existsSync(filePath)) {
             console.log(`Table Relation Test Exists | Path: ${filePath}\n`);
@@ -134,4 +166,5 @@ let generateTableRelationTest = () => {
     }
 }
 
-module.exports = generateTableRelationTest;
+// module.exports = generateTableRelationTest;
+generateTableRelationTest()

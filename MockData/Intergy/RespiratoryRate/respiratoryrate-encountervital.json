@@ -1,0 +1,32 @@
+{
+    "_id": "a1f91554-2c59-4569-888c-8bef49885cb6",
+    "record": {
+        "encountervitalsetsid": "30",
+        "vitaltypesid": "5",
+        "recordstatus": "A",
+        "vitalvalue": "76.000000",
+        "timestamp": "20090820-54595",
+        "lastuser": null,
+        "createstamp": "20090820-54595",
+        "createuser": "9",
+        "note": null,
+        "vitalunit": "bpm",
+        "createdatetimeutc": null
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.50.00_12",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:36:36.221Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20211203-00001",
+        "tablename": "encountervital",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:36:36.222Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}

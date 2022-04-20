@@ -4,7 +4,7 @@ let config = require('../Configuration/config.json');
 
 let table; //Buffer variable
 
-let fileName = config.EhrSystem === 'Intergy' ? `V${config.SchemaVersion}SerializationFactory${config.FileFormats.cs}` : `V${config.SchemaVersion + config.EhrSystem}SerializationFactory${config.FileFormats.cs}`;
+let fileName = config.EhrSystem === 'Intergy' ? `V${config.SchemaVersionUnderscored}SerializationFactory${config.FileFormats.cs}` : `V${config.SchemaVersionUnderscored + config.EhrSystem}SerializationFactory${config.FileFormats.cs}`;
 let filePath = config.BaseLocation + config.FileLocation.Deserialization + fileName;
 fileContent = fs.readFileSync(filePath, { encoding: 'utf-8' });
 

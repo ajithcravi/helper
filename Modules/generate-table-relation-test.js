@@ -2,7 +2,7 @@ let fs = require('fs');
 
 let config = require('../Configuration/config.json');
 
-let serializationFactory = config.EhrSystem === 'Intergy' ? `V${config.SchemaVersion}SerializationFactory()` : `V${config.SchemaVersion + config.EhrSystem}SerializationFactory()`;
+let serializationFactory = config.EhrSystem === 'Intergy' ? `V${config.SchemaVersionUnderscored}SerializationFactory()` : `V${config.SchemaVersionUnderscored + config.EhrSystem}SerializationFactory()`;
 
 let fromTableBuffer = "";
 let toTableBuffer = "";
@@ -40,7 +40,7 @@ let generateResourceTableTestClassGenericDefinitions = () => {
             mockVersionSerialization.Object.Add(EHRType.${config.EhrSystem}, new Dictionary<string, SerializationFactoryBase>()
             {
                 {
-                     "${config.SchemaVersion.split("_").join(".")}", new ${serializationFactory}
+                     "${config.SchemaVersion}", new ${serializationFactory}
                 }
             });
             _mockVersionSerializationFactory = new Mock<VersionedDeserializerFactory>(mockVersionSerialization.Object);
@@ -55,7 +55,7 @@ let generateMockTables = () => {
     let mockTablesStatement = ``;
 
     config.Concept.TableDetails.Tables.forEach(table => {
-        let mock = `\n            string serialized${table.TableName} = FileHelper.ReadMockJsonFile("${config.Concept.ConceptName.toLowerCase()}-${table.TableName.toLowerCase()}.json");
+        let mock = `\n            string serialized${table.TableName} = FileHelper.ReadMockJsonFile("${config.Concept.ConceptName}/${config.Concept.ConceptName.toLowerCase()}-${table.TableName.toLowerCase()}.json");
             _storageAccess.Setup(x => x.GetRecords < DBRecordBase > (It.IsAny < EHRType > (), "${table.TableName.toLowerCase()}",
             It.IsAny < IEnumerable < KeyPair >> ()).Result).Returns(new List < string > () { serialized${table.TableName} });
 `
@@ -70,7 +70,7 @@ let generateChangedValuesDefinitions = (relations) => {
     let definitions = ``;
     relations.forEach(relation => {
         if(relation.ToField) {
-            let value = require(`../MockData/${config.Concept.ConceptName}/${config.Concept.ConceptName.toLowerCase()}-${toTableBuffer.toLowerCase()}`).record[relation.ToField.toLowerCase()]
+            let value = require(`../MockData/${config.EhrSystem}/${config.Concept.ConceptName}/${config.Concept.ConceptName.toLowerCase()}-${toTableBuffer.toLowerCase()}`).record[relation.ToField.toLowerCase()]
             if (!value) throw Error(`Change record value cannot be null/undefined. Please check table: ${toTableBuffer.toLowerCase()} field: ${relation.ToField}`)
             let definition = `mockChanged${config.Concept.ConceptName}Record.Object.Record.${relation.FromField} = "${value}";`
     
@@ -82,14 +82,18 @@ let generateChangedValuesDefinitions = (relations) => {
 }
 
 let generateTestStatements = () => {
+    let processedList = {};
     let testStatements = ``;
 
     config.Concept.TableRelationDetails.forEach(table => {
         fromTableBuffer = table.FromTable;
         toTableBuffer = table.ToTable;
 
-        sucessStatement = `\n        [Fact]
-        public async void ${config.Concept.ConceptName.toLowerCase()}ResourceTables_CallsGetAllRecordsNeededForResource_ShouldReturnComplete_With${table.FromTable}Change()
+        if(processedList[fromTableBuffer] == undefined) processedList[fromTableBuffer] = 0
+        else  processedList[fromTableBuffer]++
+
+        successStatement = `\n        [Fact]
+        public async void ${config.Concept.ConceptName.toLowerCase()}ResourceTables_CallsGetAllRecordsNeededForResource_ShouldReturnComplete_With${table.FromTable}Change${processedList[fromTableBuffer] == 0 ? "": processedList[fromTableBuffer]}()
         {
             var ${config.Concept.ConceptName.toLowerCase()}ResourceTables =
                 new ${config.Concept.ConceptName}ResourceTables(_mockVersionSerializationFactory.Object, _storageAccess.Object, _logger.Object);
@@ -105,7 +109,7 @@ ${generateChangedValuesDefinitions(table.Relations)}
         }
 `
 
-        testStatements += sucessStatement
+        testStatements += successStatement
     })
 
     let failureStatement = `\n        [Fact]
@@ -131,7 +135,7 @@ let generateResourceTableTestClass = () => {
     let resourceTableTestClass = `namespace ${config.NameSpace.TableRelationsTest}
 {
     [ExcludeFromCodeCoverage]
-    public class ${config.e === 'Intergy' ? "" : config.EhrSystem}${config.Concept.ConceptName}ResourceTableTests
+    public class ${config.EhrSystem === 'Intergy' ? "" : config.EhrSystem}${config.Concept.ConceptName}ResourceTableTests
     {
         ${generateResourceTableTestClassGenericDefinitions()}
 ${generateTestStatements()}

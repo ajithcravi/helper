@@ -1,0 +1,30 @@
+{
+    "_id": "cc1b6370bf5d4241d68f15d8c0358b6001199a38",
+    "record": {
+        "createstamp": "20060822-37429",
+        "createuser": "createuser",
+        "displayorder": "1",
+        "lastuser": "lastuser",
+        "medcinid": "1",
+        "standarduom": "1",
+        "timestamp": "2022-03-07T12:36:33.231Z",
+        "vitaltypelabel": "vitaltypelabel",
+        "vitaltypesid": "5"
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.50.00_12",
+        "transactiondatetime": {
+            "$date": "2022-03-01T22:46:30.000Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20220402-000011",
+        "tablename": "vitaltype",
+        "cdcoperation": "insert",
+        "timezone": "-05:00",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-04-07T17:54:26.583Z"
+        },
+        "loadby": "CDC_PROCESSOR"
+    }
+}

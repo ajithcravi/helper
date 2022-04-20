@@ -1,0 +1,54 @@
+{
+    "_id": "abe2bae7-02e6-441c-9bb0-c0b7bf38bd18",
+    "record": {
+        "procedurecode": "32821",
+        "class": "CLASS",
+        "description": "Procedure display",
+        "sex": "M",
+        "visit": "Y",
+        "ubcode": null,
+        "toscode": "TOS",
+        "departmentcode": null,
+        "certnumber": null,
+        "postmethod": "O",
+        "postfactor": null,
+        "emcbillable": "N",
+        "justification": null,
+        "collapsemode": null,
+        "ubsortpriority": null,
+        "glsubacct": null,
+        "taxable": "Y",
+        "validatediagstatus": "D",
+        "planrejectstatus": null,
+        "keywords": null,
+        "recordstatus": "A",
+        "timestamp": null,
+        "lastuser": null,
+        "createstamp": null,
+        "createuser": null,
+        "billingclass": null,
+        "eapagesid": null,
+        "concurrencyexempt": null,
+        "muqualifyingvisit": null,
+        "visittype": null,
+        "udsqualifyingvisit": null,
+        "startdate": null,
+        "enddate": null
+    },
+    "metadata": {
+        "clientid": "2.16.840.1.113883.3.140.91995",
+        "schemaversion": "12.50.00_12",
+        "transactiondatetime": {
+            "$date": "2022-03-07T12:36:43.304Z"
+        },
+        "envelopesequencenum": "2.16.840.1.113883.3.140.91995-20211203-00001",
+        "tablename": "procedure",
+        "cdcoperation": "insert",
+        "timezone": "+05:30",
+        "record_isdeleted": false,
+        "loaddttm": {
+            "$date": "2022-03-07T12:36:43.304Z"
+        },
+        "loadby": "BULK_LOAD"
+    }
+}
